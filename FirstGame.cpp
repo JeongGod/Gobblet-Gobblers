@@ -7,6 +7,7 @@ using namespace std;
 struct Board{
     string name = "X";
     int s_horse;
+    int x,y;
 };
 Board comp[5][5];
 vector <Board> store;
@@ -39,7 +40,6 @@ public:
             if(comp[x][y].name.compare(p) == 0) return false; // 내가 놓으려는 곳에 또 놓았던 곳에 놓을라고 해
             if(comp[x][y].s_horse < horse) { // 내 말이 크다면 놓을 수 있어.
                 // 덮어씌웠으니, 그 전에 있던 값들을 저장해놓아야 한다.
-                // vector로 사용하자.
                 store.push_back(comp[x][y]);
                 comp[x][y].name = p;
                 comp[x][y].s_horse = horse;
@@ -55,19 +55,39 @@ public:
         return true;
     }
     bool moveHorse(int x, int y, int move_x, int move_y, string p) {
-        if(comp[x][y].name.compare(p) == 0) { // 내 말인지 확인부터
-            if(comp[move_x][move_y].name.compare(p) == 0) { // 내 말쪽으로 옮기려해
-                printf("실화입니까? 안됩니다.\n");
+        if(comp[x][y].name.compare(p) == 0) { 
+            // 내 말인지 확인부터
+            if(comp[move_x][move_y].name.compare(p) == 0 || 
+               comp[move_x][move_y].s_horse >= comp[x][y].s_horse) { 
+                // 내 말쪽으로 옮기려해
+                // 옮기려는 곳이 내 말보다 크다면
                 return false;
             }
-            if(comp[move_x][move_y].s_horse >= comp[x][y].s_horse) { // 옮기려는 곳이 내 말보다 크다면
-                return false;
+            // 일단 말을 옮긴다.
+            if(comp[move_x][move_y].s_horse != 0) {
+                // 비어있는 공간이 아니라면
+                store.push_back(comp[move_x][move_y]);
+                comp[move_x][move_y] = comp[x][y];
+            } else {
+                // 비어있는 공간이라면
+                comp[move_x][move_y] = comp[x][y];
             }
-            comp[move_x][move_y] = comp[x][y];
+            // 옮기고나서, 덮여씌여졌던 말을 보여준다.
+            vector<Board>::reverse_iterator rIter;
+            for(rIter = store.rbegin(); rIter != store.rend(); rIter++) {
+                if(rIter->x == x && rIter->y == y) {
+                    comp[x][y].name = rIter->name;
+                    comp[x][y].s_horse = rIter->s_horse;
+                    store.erase((rIter+1).base());
+                    return true;
+                }
+            }
+            // 만약 덮여씌여져있던 말이 없다면
             comp[x][y].name = "X";
             comp[x][y].s_horse = 0;
             return true;
         } else {
+            // 내 말이 아닌 곳이라면
             return false;
         }
     }
@@ -187,6 +207,7 @@ void start() {
         }
         vector<Board>::iterator it;
         for(it = store.begin(); it != store.end(); it++) {
+            printf("x = %d, y = %d\n", it->x, it->y);
             cout << it->name << '\n';
             printf("%d\n", it->s_horse);
         }
@@ -195,6 +216,12 @@ void start() {
 }
 
 int main() {
+    for(int i=1; i<=3; i++) {
+        for(int j=1; j<=3; j++) {
+            comp[i][j].x = i;
+            comp[i][j].y = j;
+        }
+    }
     start();
     return 0;
 }
