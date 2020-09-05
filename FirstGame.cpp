@@ -93,6 +93,33 @@ public:
     }
 };
 
+int check() {
+    for(int i=1; i<=3; i++) {
+        // 가로부분 3개 일치하는지
+        if(comp[i][1].name.compare("A") == 0 && comp[i][2].name.compare("A") == 0 && comp[i][3].name.compare("A") == 0) {
+            return 1;
+        } else if (comp[i][1].name.compare("B") == 0 && comp[i][2].name.compare("B") == 0 && comp[i][3].name.compare("B") == 0) {
+            return 2;
+        }
+    }
+    for(int i=1; i<=3; i++) {
+        // 세로부분 3개 일치하는지
+        if(comp[1][i].name.compare("A") == 0 && comp[2][i].name.compare("A") == 0 && comp[3][i].name.compare("A") == 0) {
+            return 1;
+        } else if (comp[1][i].name.compare("B") == 0 && comp[2][i].name.compare("B") == 0 && comp[3][i].name.compare("B") == 0) {
+            return 2;
+        }
+    }
+    // 대각선 부분 3개 일치하는지
+    if((comp[1][1].name.compare("A") == 0 && comp[2][2].name.compare("A") == 0 && comp[3][3].name.compare("A") == 0) ||
+       (comp[1][3].name.compare("A") == 0 && comp[2][2].name.compare("A") == 0 && comp[3][1].name.compare("A") == 0)) {
+            return 1;
+    } else if((comp[1][1].name.compare("B") == 0 && comp[2][2].name.compare("B") == 0 && comp[3][3].name.compare("B") == 0) ||
+              (comp[1][3].name.compare("B") == 0 && comp[2][2].name.compare("B") == 0 && comp[3][1].name.compare("B") == 0)) {
+                return 2;
+    }
+    return 0;
+}
 
 void pan() {
     for(int i=1; i<=4; i++) {
@@ -210,6 +237,15 @@ void start() {
             printf("x = %d, y = %d\n", it->x, it->y);
             cout << it->name << '\n';
             printf("%d\n", it->s_horse);
+        }
+        if(check() == 1) {
+            printf("Player1(A) 승리!\n");
+            pan();
+            break;
+        } else if(check() == 2) {
+            printf("Player2(B) 승리!\n");
+            pan();
+            break;
         }
         pan();
     }
