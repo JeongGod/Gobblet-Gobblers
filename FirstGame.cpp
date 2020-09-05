@@ -5,7 +5,7 @@
 using namespace std;
 
 struct Board{
-    string name = "X";
+    string name;
     int s_horse;
     int x,y;
 };
@@ -83,7 +83,7 @@ public:
                 }
             }
             // 만약 덮여씌여져있던 말이 없다면
-            comp[x][y].name = "X";
+            comp[x][y].name = " ";
             comp[x][y].s_horse = 0;
             return true;
         } else {
@@ -123,8 +123,11 @@ int check() {
 
 void pan() {
     for(int i=1; i<=4; i++) {
-        printf("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n");
-        if(i==4) return;
+        if(i==4) {
+            printf("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n");
+            return;
+        }
+        printf("ㅡㅡ %d ㅡㅡㅡ %d ㅡㅡㅡ %d ㅡㅡㅡ\n", 3*i-2, 3*i-1, 3*i);
         for(int j=1; j<4; j++) {
             cout << "|    " << comp[i][j].name << "   ";
         }
@@ -151,6 +154,13 @@ void start() {
     while(true) {
         if(p==1){
             printf("\"Player1\"의 차례입니다.\n");
+            printf("남은 말 : [");
+            for(int i=1; i<=3; i++) {
+                for(int j=0; j<user1.getHorse(i); j++) {
+                    printf("%d", i);
+                }
+            }
+            printf("]\n");
             printf("1. 놓기, 2. 옮기기\n");
             scanf("%d", &way);
             if(way==1){ // 놓는 방법
@@ -160,7 +170,6 @@ void start() {
                 printf("y : ");
                 scanf("%d", &y);
                 printf("놓을 말을 선택해주세요.\n");
-                printf("1 : %d, 2 : %d, 3 : %d\n", user1.getHorse(1), user1.getHorse(2), user1.getHorse(3));
                 scanf("%d", &horse);
                 system("clear");
                 if(user1.putHorse(x,y,horse,"A")) {
@@ -192,6 +201,13 @@ void start() {
             }
         } else {
             printf("\"Player2\"의 차례입니다.\n");
+            printf("남은 말 : [");
+            for(int i=1; i<=3; i++) {
+                for(int j=0; j<user2.getHorse(i); j++) {
+                    printf("%d", i);
+                }
+            }
+            printf("]\n");
             printf("1. 놓기, 2. 옮기기\n");
             scanf("%d", &way);
             if(way==1) {
@@ -201,7 +217,6 @@ void start() {
                 printf("y : ");
                 scanf("%d", &y);
                 printf("놓을 말을 선택해주세요.\n");
-                printf("1 : %d, 2 : %d, 3 : %d\n", user2.getHorse(1), user2.getHorse(2), user2.getHorse(3));
                 scanf("%d", &horse);
                 system("clear");
                 if(user2.putHorse(x,y,horse,"B")) {
@@ -234,9 +249,10 @@ void start() {
         }
         vector<Board>::iterator it;
         for(it = store.begin(); it != store.end(); it++) {
-            printf("x = %d, y = %d\n", it->x, it->y);
+            printf("덮여져 있는 말들\n");
             cout << it->name << '\n';
-            printf("%d\n", it->s_horse);
+            printf("[%d][%d] ", it->x, it->y);
+            printf("size = %d\n", it->s_horse);
         }
         if(check() == 1) {
             printf("Player1(A) 승리!\n");
@@ -256,6 +272,7 @@ int main() {
         for(int j=1; j<=3; j++) {
             comp[i][j].x = i;
             comp[i][j].y = j;
+            comp[i][j].name = " ";
         }
     }
     start();
