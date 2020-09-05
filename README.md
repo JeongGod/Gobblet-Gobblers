@@ -5,32 +5,24 @@ Gobblet-Gobblers
 
 * Language : C++
 
-* ### 러시아 장기
-    * 1:1 매치로 진행한다.
-    * 나, 상대방은 각각 1,2,3의 크기를 가진 말이 2개씩 존재한다.
-    ```
-    ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ
-    |       |       |       |
-    |       |       |       |
-    ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ
-    |       |       |       |
-    |       |       |       |
-    ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ
-    |       |       |       |
-    |       |       |       |
-    ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ
-    ```
-    판은 이런 식으로 되어있다.
-
-* ### 규칙
-    1. 빈 칸에는 어떤 말이든 놓을 수 있다.
-    2. 만약 놓으려는 칸에 상대 말이 있다면 놓을 수 없다.
-       하지만, 상대 말보다 숫자가 크다면 그 말을 덮어 씌울 수 있다.
-    3. 한 턴에는 자신이 가지고 있는 말이나, 판에 놓여져 있는 말을 옮기면서 턴을 소모한다.
-       만약, 자신의 말이 상대의 말로 덮어져있는 상태면 옮길 수 없다.
-    4. 같은 크기의 말은 같은 곳에 놓을 수 없다.
+* ### Gobblet-Gobblers
+    * proceed one-on-one
+    * I and opponent have two horses in the size of 1,2,3
     
-* ### 승리조건
-    - 자신의 말로 한 줄의 빙고를 만든다면 승리다.
-* ### 패배조건
-    - 상대의 말이 한 줄의 빙고를 만든다면 패배다.
+   <img width="252" alt="스크린샷 2020-09-05 오후 10 40 02" src="https://user-images.githubusercontent.com/22341452/92306265-beb12700-efc8-11ea-8a1a-533167d8a227.png">
+
+* ### Rule
+    1. You can put any word in the blank.
+    2. If there is an opponent in the compartment you are trying to put, you can't let it go.
+       However, if the number is larger than the opponent's, the horse can be overwritten.
+    3. One turn consumes the turn by moving the horse you have or the horse on the board.
+       If your words are covered with the other's words, you cannot move them.
+    4. Horses of the same size cannot be placed in the same place.
+    
+* ### Victory
+    - If you make a line of bingo in your own words, you win.
+* ### Defeat
+    - f the opponent's horse makes a line of bingo, it will be a defeat.
+
+* ### GamePlay
+![game](https://user-images.githubusercontent.com/22341452/92306463-2ae05a80-efca-11ea-960e-a8e939930205.gif)
